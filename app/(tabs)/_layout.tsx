@@ -1,33 +1,94 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
-
-import { HapticTab } from '@/components/haptic-tab';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { Tabs, useRouter, useSegments } from "expo-router";
+import React from "react";
+import { Image, Pressable } from "react-native";
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+  const segments = useSegments();
+  const currentRoute = segments[segments.length - 1];
+  const shouldHideTabBar = currentRoute === "create";
+
+  const router = useRouter();
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-        tabBarButton: HapticTab,
-      }}>
+        tabBarActiveTintColor: "#F94695",
+        headerShown: true,
+        headerStyle: {
+          backgroundColor: "#1C0B37",
+        },
+        headerTintColor: "#fff",
+        tabBarStyle: {
+          //display: shouldHideTabBar ? "none" : "flex",
+          backgroundColor: "#1C0B37",
+          height: 100,
+          paddingTop: 10,
+          paddingHorizontal: 50,
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,
+          borderTopWidth: 0,
+        },
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          title: "Home",
+          tabBarIcon: ({ focused }) => (
+            <Image
+              source={
+                focused
+                  ? require("@/assets/images/home-selected-icon.png")
+                  : require("@/assets/images/home-icon.png")
+              }
+              style={{ width: 28, height: 28 }}
+            />
+          ),
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="create"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          title: "Create",
+          tabBarButton: (props) => {
+            const { ref, ...rest } = props as any;
+            return (
+              <Pressable
+                {...rest}
+                onPress={(event) => {
+                  event.preventDefault();
+                  router.push("/create");
+                }}
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Image
+                  source={require("@/assets/images/create-icon.png")}
+                  style={{ width: 28, height: 28 }}
+                />
+              </Pressable>
+            );
+          },
+        }}
+      />
+      <Tabs.Screen
+        name="summary"
+        options={{
+          title: "Summary",
+          headerShown: false,
+          tabBarIcon: ({ focused }) => (
+            <Image
+              source={
+                focused
+                  ? require("@/assets/images/summary-selected-icon.png")
+                  : require("@/assets/images/summary-icon.png")
+              }
+              style={{ width: 28, height: 28 }}
+            />
+          ),
         }}
       />
     </Tabs>
