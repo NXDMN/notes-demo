@@ -1,14 +1,16 @@
-import { Stack } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { View } from "react-native";
+import React from "react";
 
 export const unstable_settings = {
   anchor: "(tabs)",
 };
 
 export default function RootLayout() {
+  const router = useRouter();
+
   return (
-    <View style={{ flex: 1, backgroundColor: "#1C0B37" }}>
+    <>
       <Stack>
         <Stack.Screen
           name="(tabs)"
@@ -24,14 +26,11 @@ export default function RootLayout() {
           name="create"
           options={{
             title: "New Note",
-            headerStyle: {
-              backgroundColor: "#1C0B37",
-            },
-            headerTintColor: "#fff",
+            headerShown: false,
           }}
         />
       </Stack>
       <StatusBar style="light" />
-    </View>
+    </>
   );
 }

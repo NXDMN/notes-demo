@@ -19,7 +19,6 @@ export default function TabLayout() {
         },
         headerTintColor: "#fff",
         tabBarStyle: {
-          //display: shouldHideTabBar ? "none" : "flex",
           backgroundColor: "#1C0B37",
           height: 100,
           paddingTop: 10,
