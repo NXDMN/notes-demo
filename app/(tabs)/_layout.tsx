@@ -47,7 +47,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="create"
+        name="dummy"
         options={{
           title: "Create",
           tabBarButton: (props) => {
