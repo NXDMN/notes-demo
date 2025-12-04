@@ -1,5 +1,6 @@
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import { View } from "react-native";
 
 export const unstable_settings = {
   anchor: "(tabs)",
@@ -7,7 +8,7 @@ export const unstable_settings = {
 
 export default function RootLayout() {
   return (
-    <>
+    <View style={{ flex: 1, backgroundColor: "#1C0B37" }}>
       <Stack>
         <Stack.Screen
           name="(tabs)"
@@ -23,7 +24,6 @@ export default function RootLayout() {
           name="create"
           options={{
             title: "New Note",
-            presentation: "modal",
             headerStyle: {
               backgroundColor: "#1C0B37",
             },
@@ -31,7 +31,7 @@ export default function RootLayout() {
           }}
         />
       </Stack>
-      <StatusBar style="auto" />
-    </>
+      <StatusBar style="light" />
+    </View>
   );
 }
