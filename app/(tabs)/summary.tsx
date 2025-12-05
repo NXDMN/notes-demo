@@ -115,6 +115,6 @@ const styles = StyleSheet.create({
     height: 180,
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: "#1C0B37",
+    backgroundColor: "#280843",
   },
 });

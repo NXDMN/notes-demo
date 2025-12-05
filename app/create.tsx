@@ -25,7 +25,7 @@ const CreateScreen = () => {
       <Header
         title="New Note"
         headerTintColor="white"
-        headerStyle={{ backgroundColor: "#1C0B37" }}
+        headerStyle={{ backgroundColor: "#280843" }}
         headerLeft={() => {
           return (
             <TouchableOpacity
@@ -79,7 +79,7 @@ const CreateScreen = () => {
             alignItems: "center",
             height: 120,
             justifyContent: "center",
-            backgroundColor: "#1C0B37",
+            backgroundColor: "#220C3A",
             borderRadius: 20,
           }}
         >

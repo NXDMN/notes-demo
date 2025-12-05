@@ -15,11 +15,11 @@ export default function TabLayout() {
         tabBarActiveTintColor: "#F94695",
         headerShown: true,
         headerStyle: {
-          backgroundColor: "#1C0B37",
+          backgroundColor: "#280843",
         },
         headerTintColor: "#fff",
         tabBarStyle: {
-          backgroundColor: "#1C0B37",
+          backgroundColor: "#220C3A",
           height: 100,
           paddingTop: 10,
           paddingHorizontal: 50,
