@@ -1,4 +1,5 @@
 import { Note } from "@/models/Note";
+import { LinearGradient } from "expo-linear-gradient";
 import { useState } from "react";
 import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 
@@ -60,11 +61,13 @@ export default function HomeScreen() {
   };
 
   return (
-    <View
+    <LinearGradient
+      colors={["#1B284F", "#351159", "#421C45", "#3B184E"]}
+      locations={[0.1445, 0.4917, 0.7482, 1.0]}
+      start={{ x: 1, y: 1 }}
+      end={{ x: 0, y: 0 }}
       style={{
         flex: 1,
-        backgroundColor:
-          "linear-gradient(104.46deg, rgba(28, 11, 55, 0.85) -3.39%, rgba(29, 8, 55, 0.85) 102.44%);",
         padding: 20,
       }}
     >
@@ -124,7 +127,7 @@ export default function HomeScreen() {
           );
         })}
       </ScrollView>
-    </View>
+    </LinearGradient>
   );
 }
 
