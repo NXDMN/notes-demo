@@ -26,7 +26,14 @@ const CreateScreen = () => {
       <Header
         title="New Note"
         headerTintColor="white"
-        headerStyle={{ backgroundColor: "#280843" }}
+        headerBackground={() => (
+          <LinearGradient
+            colors={["#1D0837", "#1C0B37"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={{ flex: 1 }}
+          />
+        )}
         headerLeft={() => {
           return (
             <TouchableOpacity
