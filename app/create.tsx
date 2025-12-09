@@ -5,10 +5,10 @@ import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
   Pressable,
+  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
-  View,
 } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 
@@ -34,6 +34,15 @@ const CreateScreen = () => {
       <Header
         title="New Note"
         headerTintColor="white"
+        headerTitleAlign="left"
+        headerTitleStyle={{
+          fontFamily: "PingFang SC",
+          fontSize: 24,
+          fontWeight: "600",
+          verticalAlign: "middle",
+          letterSpacing: 0,
+        }}
+        headerStyle={{ height: 120 }}
         headerBackground={() => (
           <LinearGradient
             colors={["#1D0837", "#1C0B37"]}
@@ -48,7 +57,7 @@ const CreateScreen = () => {
               onPress={() => router.back()}
               style={{ marginHorizontal: 20 }}
             >
-              <Ionicons name="arrow-back" size={24} color="white" />
+              <Ionicons name="chevron-back" size={24} color="white" />
             </TouchableOpacity>
           );
         }}
@@ -74,45 +83,27 @@ const CreateScreen = () => {
           mode="SIMPLE"
           theme="DARK"
           placeholder="Choose a category"
-          textStyle={{
-            color: "#FFFFFFE5",
-            fontFamily: "PingFang SC",
-            fontSize: 14,
-            fontWeight: "400",
-            fontStyle: "normal",
-            lineHeight: 14 * 1.5,
-            letterSpacing: -0.28,
-          }}
-          dropDownContainerStyle={{
-            borderColor: "#FFFFFF1F",
-            borderStyle: "solid",
-            borderWidth: 1,
-            backdropFilter: "blur(42px)",
-            backgroundColor: "#FFFFFF0D",
-            borderRadius: 16,
-          }}
-          style={{
-            borderColor: "#FFFFFF1F",
-            borderStyle: "solid",
-            borderWidth: 1,
-            backdropFilter: "blur(42px)",
-            backgroundColor: "#FFFFFF0D",
-            borderRadius: 16,
-          }}
+          textStyle={styles.text}
+          dropDownContainerStyle={styles.glassContainer}
+          style={{ ...styles.glassContainer, height: 56 }}
         />
         <TextInput
           style={{
-            backgroundColor: "rgba(255,255,255,0.06)",
-            borderRadius: 8,
-            height: 200,
+            ...styles.glassContainer,
+            ...styles.text,
+            height: 260,
             textAlignVertical: "top",
-            padding: 10,
           }}
+          multiline={true}
           value={text}
           onChangeText={setText}
-          placeholder="Write a note..."
+          placeholderTextColor="#FFFFFFE5"
+          placeholder="Please input note content"
         />
-        <View
+        <LinearGradient
+          colors={["#1D0837", "#1C0B37"]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
           style={{
             position: "absolute",
             left: 0,
@@ -137,12 +128,50 @@ const CreateScreen = () => {
               marginBottom: 20,
             }}
           >
-            <Text style={{ color: "#fff" }}>Save</Text>
+            <LinearGradient
+              colors={["#F94695", "#F13A76"]}
+              start={{ x: 0.5, y: 0 }}
+              end={{ x: 0.5, y: 1 }}
+            >
+              <Text
+                style={{
+                  ...styles.text,
+                  color: "#fff",
+                  fontWeight: "600",
+                  lineHeight: 14 * 1.3,
+                  letterSpacing: 0,
+                  textAlign: "center",
+                }}
+              >
+                Save
+              </Text>
+            </LinearGradient>
           </Pressable>
-        </View>
+        </LinearGradient>
       </LinearGradient>
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  glassContainer: {
+    borderColor: "#FFFFFF1F",
+    borderStyle: "solid",
+    borderWidth: 1,
+    backdropFilter: "blur(42px)",
+    backgroundColor: "#FFFFFF0D",
+    borderRadius: 16,
+    padding: 16,
+  },
+  text: {
+    color: "#FFFFFFE5",
+    fontFamily: "PingFang SC",
+    fontSize: 14,
+    fontWeight: "400",
+    fontStyle: "normal",
+    lineHeight: 14 * 1.5,
+    letterSpacing: -0.28,
+  },
+});
 
 export default CreateScreen;
