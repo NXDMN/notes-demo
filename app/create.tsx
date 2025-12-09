@@ -1,5 +1,4 @@
 import { Ionicons } from "@expo/vector-icons";
-import { Picker } from "@react-native-picker/picker";
 import { Header } from "@react-navigation/elements";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
@@ -11,6 +10,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import DropDownPicker from "react-native-dropdown-picker";
 
 const CreateScreen = () => {
   const [selected, setSelected] = useState();
@@ -20,6 +20,14 @@ const CreateScreen = () => {
   const saveNote = async () => {
     router.back();
   };
+
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState("");
+  const [items, setItems] = useState([
+    { label: "Work and Study", value: "Work and Study" },
+    { label: "Life", value: "Life" },
+    { label: "Health and Well-being", value: "Health and Well-being " },
+  ]);
 
   return (
     <>
@@ -56,18 +64,42 @@ const CreateScreen = () => {
           gap: 20,
         }}
       >
-        <Picker
-          style={{
-            backgroundColor: "rgba(255,255,255,0.06)",
-            borderRadius: 8,
+        <DropDownPicker
+          open={open}
+          value={value}
+          items={items}
+          setOpen={setOpen}
+          setValue={setValue}
+          setItems={setItems}
+          mode="SIMPLE"
+          theme="DARK"
+          placeholder="Choose a category"
+          textStyle={{
+            color: "#FFFFFFE5",
+            fontFamily: "PingFang SC",
+            fontSize: 14,
+            fontWeight: "400",
+            fontStyle: "normal",
+            lineHeight: 14 * 1.5,
+            letterSpacing: -0.28,
           }}
-          selectedValue={selected}
-          onValueChange={(itemValue, itemIndex) => setSelected(itemValue)}
-        >
-          {CATEGORIES.map((category) => (
-            <Picker.Item label={category} value={category} key={category} />
-          ))}
-        </Picker>
+          dropDownContainerStyle={{
+            borderColor: "#FFFFFF1F",
+            borderStyle: "solid",
+            borderWidth: 1,
+            backdropFilter: "blur(42px)",
+            backgroundColor: "#FFFFFF0D",
+            borderRadius: 16,
+          }}
+          style={{
+            borderColor: "#FFFFFF1F",
+            borderStyle: "solid",
+            borderWidth: 1,
+            backdropFilter: "blur(42px)",
+            backgroundColor: "#FFFFFF0D",
+            borderRadius: 16,
+          }}
+        />
         <TextInput
           style={{
             backgroundColor: "rgba(255,255,255,0.06)",
