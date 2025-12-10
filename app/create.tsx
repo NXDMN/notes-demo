@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 
-const CreateScreen = () => {
+export default function CreateScreen() {
   const [selected, setSelected] = useState();
   const CATEGORIES = ["Work and Study", "Life", "Health and Well-being"];
   const [text, setText] = useState("");
@@ -151,7 +151,7 @@ const CreateScreen = () => {
       </LinearGradient>
     </>
   );
-};
+}
 
 const styles = StyleSheet.create({
   glassContainer: {
@@ -173,5 +173,3 @@ const styles = StyleSheet.create({
     letterSpacing: -0.28,
   },
 });
-
-export default CreateScreen;

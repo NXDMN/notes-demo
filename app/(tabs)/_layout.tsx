@@ -1,17 +1,19 @@
+import { TabButton } from "@/components/TabButton";
 import { LinearGradient } from "expo-linear-gradient";
-import { Tabs, useRouter } from "expo-router";
+import { Tabs, useRouter, useSegments } from "expo-router";
 import React from "react";
 import { Image, Pressable } from "react-native";
 
 export default function TabLayout() {
   const router = useRouter();
-
+  const segments = useSegments();
+  const currentRoute = segments[segments.length - 1];
   return (
     <LinearGradient
       colors={["#1B284F", "#351159", "#421C45", "#3B184E"]}
       locations={[0.1445, 0.4917, 0.7482, 1.0]}
-      start={{ x: 1, y: 1 }}
-      end={{ x: 0, y: 0 }}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 1 }}
       style={{ flex: 1 }}
     >
       <Tabs
@@ -32,16 +34,16 @@ export default function TabLayout() {
               colors={["#1D0837", "#1C0B37"]}
               start={{ x: 0, y: 0 }}
               end={{ x: 1, y: 1 }}
-              style={{ flex: 1 }}
+              style={{ flex: 1, borderRadius: 20 }}
             />
           ),
           tabBarStyle: {
-            height: 100,
-            paddingTop: 10,
+            height: 120,
             paddingHorizontal: 50,
             borderTopLeftRadius: 20,
             borderTopRightRadius: 20,
             borderTopWidth: 0,
+            paddingTop: 30,
           },
         }}
       >
@@ -49,16 +51,19 @@ export default function TabLayout() {
           name="index"
           options={{
             title: "Home",
-            tabBarIcon: ({ focused }) => (
-              <Image
-                source={
-                  focused
-                    ? require("@/assets/images/home-selected-icon.png")
-                    : require("@/assets/images/home-icon.png")
-                }
-                style={{ width: 28, height: 28 }}
-              />
-            ),
+            tabBarButton: (props) => {
+              const { ref, ...rest } = props as any;
+              const isSelected = currentRoute === "(tabs)";
+              return (
+                <TabButton
+                  label="Home"
+                  selectedIcon={require("@/assets/images/home-selected-icon.png")}
+                  unSelectedIcon={require("@/assets/images/home-icon.png")}
+                  isSelected={isSelected}
+                  {...rest}
+                />
+              );
+            },
           }}
         />
         <Tabs.Screen
@@ -82,7 +87,7 @@ export default function TabLayout() {
                 >
                   <Image
                     source={require("@/assets/images/create-icon.png")}
-                    style={{ width: 28, height: 28 }}
+                    style={{ width: 36, height: 36 }}
                   />
                 </Pressable>
               );
@@ -94,16 +99,19 @@ export default function TabLayout() {
           options={{
             title: "Summary",
             headerShown: false,
-            tabBarIcon: ({ focused }) => (
-              <Image
-                source={
-                  focused
-                    ? require("@/assets/images/summary-selected-icon.png")
-                    : require("@/assets/images/summary-icon.png")
-                }
-                style={{ width: 28, height: 28 }}
-              />
-            ),
+            tabBarButton: (props) => {
+              const { ref, ...rest } = props as any;
+              const isSelected = currentRoute === "summary";
+              return (
+                <TabButton
+                  label="Summary"
+                  selectedIcon={require("@/assets/images/summary-selected-icon.png")}
+                  unSelectedIcon={require("@/assets/images/summary-icon.png")}
+                  isSelected={isSelected}
+                  {...rest}
+                />
+              );
+            },
           }}
         />
       </Tabs>
