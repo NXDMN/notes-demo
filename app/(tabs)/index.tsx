@@ -1,3 +1,4 @@
+import { PageHeader } from "@/components/PageHeader";
 import { Note } from "@/models/Note";
 import { LinearGradient } from "expo-linear-gradient";
 import { useState } from "react";
@@ -61,73 +62,76 @@ export default function HomeScreen() {
   };
 
   return (
-    <LinearGradient
-      colors={["#1B284F", "#351159", "#421C45", "#3B184E"]}
-      locations={[0.1445, 0.4917, 0.7482, 1.0]}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 1, y: 1 }}
-      style={{
-        flex: 1,
-        padding: 20,
-      }}
-    >
-      <ScrollView>
-        <View style={{ flexDirection: "row", gap: 8 }}>
-          <Image
-            source={require("@/assets/images/recent.png")}
-            style={{
-              tintColor: "#FFFFFFB2",
-              height: 20,
-              width: 20,
-            }}
-          />
-          <Text style={{ color: "#FFFFFFB2" }}>Recently created notes</Text>
-        </View>
+    <>
+      <PageHeader title="Home" />
+      <LinearGradient
+        colors={["#1B284F", "#351159", "#421C45", "#3B184E"]}
+        locations={[0.1445, 0.4917, 0.7482, 1.0]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={{
+          flex: 1,
+          padding: 20,
+        }}
+      >
+        <ScrollView>
+          <View style={{ flexDirection: "row", gap: 8 }}>
+            <Image
+              source={require("@/assets/images/recent.png")}
+              style={{
+                tintColor: "#FFFFFFB2",
+                height: 20,
+                width: 20,
+              }}
+            />
+            <Text style={{ color: "#FFFFFFB2" }}>Recently created notes</Text>
+          </View>
 
-        <View style={{ height: 20 }} />
+          <View style={{ height: 20 }} />
 
-        {CATEGORIES.map((category) => {
-          const categoryNotes = getLatestNotes(category.name);
-          return (
-            <View key={category.name}>
-              <View style={styles.categoryHeader}>
-                <Image
-                  source={category.icon}
-                  style={{
-                    tintColor: "#C724E1",
-                    height: 20,
-                    width: 20,
-                  }}
-                />
-                <Text style={{ color: "#fff" }}>{category.name}</Text>
+          {CATEGORIES.map((category) => {
+            const categoryNotes = getLatestNotes(category.name);
+            return (
+              <View key={category.name}>
+                <View style={styles.categoryHeader}>
+                  <Image
+                    source={category.icon}
+                    style={{
+                      tintColor: "#C724E1",
+                      height: 20,
+                      width: 20,
+                    }}
+                  />
+                  <Text style={{ color: "#fff" }}>{category.name}</Text>
+                </View>
+
+                {categoryNotes.length === 0 ? (
+                  <></>
+                ) : (
+                  categoryNotes.map((note) => (
+                    <View key={note.id} style={styles.noteCard}>
+                      <Text style={{ color: "#fff" }}>
+                        {truncateContent(note.content)}
+                      </Text>
+                      <Image
+                        source={require("@/assets/images/arrow.png")}
+                        style={{
+                          tintColor: "#F94695",
+                          height: 14,
+                          width: 14,
+                          marginRight: 4,
+                        }}
+                      />
+                    </View>
+                  ))
+                )}
+                <View style={{ height: 20 }} />
               </View>
-
-              {categoryNotes.length === 0 ? (
-                <></>
-              ) : (
-                categoryNotes.map((note) => (
-                  <View key={note.id} style={styles.noteCard}>
-                    <Text style={{ color: "#fff" }}>
-                      {truncateContent(note.content)}
-                    </Text>
-                    <Image
-                      source={require("@/assets/images/arrow.png")}
-                      style={{
-                        tintColor: "#F94695",
-                        height: 14,
-                        width: 14,
-                        marginRight: 4,
-                      }}
-                    />
-                  </View>
-                ))
-              )}
-              <View style={{ height: 20 }} />
-            </View>
-          );
-        })}
-      </ScrollView>
-    </LinearGradient>
+            );
+          })}
+        </ScrollView>
+      </LinearGradient>
+    </>
   );
 }
 

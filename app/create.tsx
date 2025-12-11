@@ -1,15 +1,8 @@
-import { Ionicons } from "@expo/vector-icons";
-import { Header } from "@react-navigation/elements";
+import { PageHeader } from "@/components/PageHeader";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
-import {
-  Pressable,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-} from "react-native";
+import { Pressable, StyleSheet, Text, TextInput } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 
 export default function CreateScreen() {
@@ -31,43 +24,7 @@ export default function CreateScreen() {
 
   return (
     <>
-      <Header
-        title="New Note"
-        headerTintColor="white"
-        headerTitleAlign="left"
-        headerTitleStyle={{
-          fontFamily: "PingFang SC",
-          fontSize: 24,
-          fontWeight: "600",
-          verticalAlign: "middle",
-          letterSpacing: 0,
-        }}
-        headerStyle={{
-          height: 120,
-        }}
-        headerBackground={() => (
-          <LinearGradient
-            colors={["#1D0837", "#1C0B37"]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
-            style={{
-              flex: 1,
-              borderBottomLeftRadius: 20,
-              borderBottomRightRadius: 20,
-            }}
-          />
-        )}
-        headerLeft={() => {
-          return (
-            <TouchableOpacity
-              onPress={() => router.back()}
-              style={{ marginHorizontal: 20 }}
-            >
-              <Ionicons name="chevron-back" size={24} color="white" />
-            </TouchableOpacity>
-          );
-        }}
-      />
+      <PageHeader title="New Note" hasBackButton={true} />
       <LinearGradient
         colors={["#1B284F", "#351159", "#421C45", "#3B184E"]}
         locations={[0.1445, 0.4917, 0.7482, 1.0]}

@@ -19,16 +19,7 @@ export default function TabLayout() {
       <Tabs
         screenOptions={{
           tabBarActiveTintColor: "#F94695",
-          headerShown: true,
-          headerBackground: () => (
-            <LinearGradient
-              colors={["#1D0837", "#1C0B37"]}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 1 }}
-              style={{ flex: 1 }}
-            />
-          ),
-          headerTintColor: "#fff",
+          headerShown: false,
           tabBarBackground: () => (
             <LinearGradient
               colors={["#1D0837", "#1C0B37"]}
@@ -50,7 +41,6 @@ export default function TabLayout() {
         <Tabs.Screen
           name="index"
           options={{
-            title: "Home",
             tabBarButton: (props) => {
               const { ref, ...rest } = props as any;
               const isSelected = currentRoute === "(tabs)";
@@ -98,7 +88,6 @@ export default function TabLayout() {
           name="summary"
           options={{
             title: "Summary",
-            headerShown: false,
             tabBarButton: (props) => {
               const { ref, ...rest } = props as any;
               const isSelected = currentRoute === "summary";
