@@ -42,13 +42,19 @@ export default function CreateScreen() {
           verticalAlign: "middle",
           letterSpacing: 0,
         }}
-        headerStyle={{ height: 120 }}
+        headerStyle={{
+          height: 120,
+        }}
         headerBackground={() => (
           <LinearGradient
             colors={["#1D0837", "#1C0B37"]}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
-            style={{ flex: 1 }}
+            style={{
+              flex: 1,
+              borderBottomLeftRadius: 20,
+              borderBottomRightRadius: 20,
+            }}
           />
         )}
         headerLeft={() => {

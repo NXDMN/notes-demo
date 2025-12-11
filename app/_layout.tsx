@@ -11,20 +11,16 @@ export default function RootLayout() {
 
   return (
     <>
-      <Stack>
-        <Stack.Screen
-          name="(tabs)"
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="create"
-          options={{
-            title: "New Note",
-            headerShown: false,
-          }}
-        />
+      <Stack
+        screenOptions={{
+          headerShown: false,
+          contentStyle: {
+            backgroundColor: "#1B284F",
+          },
+        }}
+      >
+        <Stack.Screen name="(tabs)" />
+        <Stack.Screen name="create" />
       </Stack>
       <StatusBar style="light" />
     </>
