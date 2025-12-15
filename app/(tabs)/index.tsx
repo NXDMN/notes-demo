@@ -1,5 +1,6 @@
 import { PageHeader } from "@/components/PageHeader";
 import { Note } from "@/models/Note";
+import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { useState } from "react";
 import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
@@ -18,19 +19,20 @@ export default function HomeScreen() {
     {
       id: 1,
       category: "Work and Study",
-      content: "Complete project proposal by Friday",
+      content: "Overview of basic computer networking knowledge",
       createdAt: Date.now() - 3600000,
     },
     {
       id: 2,
       category: "Work and Study",
-      content: "Review code changes from team",
+      content:
+        "How to calculate float multiplication and division in JavaScript?",
       createdAt: Date.now() - 7200000,
     },
     {
       id: 3,
       category: "Life",
-      content: "Buy groceries: milk, eggs, bread",
+      content: "Pan-fried chicken breast with vegetable salad",
       createdAt: Date.now() - 1800000,
     },
     {
@@ -57,10 +59,6 @@ export default function HomeScreen() {
     return getNotesByCategory(category).slice(0, 3);
   };
 
-  const truncateContent = (content: string) => {
-    return content.length > 20 ? content.substring(0, 20) + "..." : content;
-  };
-
   return (
     <>
       <PageHeader title="Home" />
@@ -75,7 +73,7 @@ export default function HomeScreen() {
         }}
       >
         <ScrollView>
-          <View style={{ flexDirection: "row", gap: 8 }}>
+          <View style={{ flexDirection: "row", gap: 10 }}>
             <Image
               source={require("@/assets/images/recent.png")}
               style={{
@@ -84,10 +82,17 @@ export default function HomeScreen() {
                 width: 20,
               }}
             />
-            <Text style={{ color: "#FFFFFFB2" }}>Recently created notes</Text>
+            <Text
+              style={{
+                ...styles.text,
+                color: "#FFFFFFB2",
+              }}
+            >
+              Recently created notes
+            </Text>
           </View>
 
-          <View style={{ height: 20 }} />
+          <View style={{ height: 30 }} />
 
           {CATEGORIES.map((category) => {
             const categoryNotes = getLatestNotes(category.name);
@@ -102,7 +107,7 @@ export default function HomeScreen() {
                       width: 20,
                     }}
                   />
-                  <Text style={{ color: "#fff" }}>{category.name}</Text>
+                  <Text style={styles.text}>{category.name}</Text>
                 </View>
 
                 {categoryNotes.length === 0 ? (
@@ -110,16 +115,22 @@ export default function HomeScreen() {
                 ) : (
                   categoryNotes.map((note) => (
                     <View key={note.id} style={styles.noteCard}>
-                      <Text style={{ color: "#fff" }}>
-                        {truncateContent(note.content)}
-                      </Text>
-                      <Image
-                        source={require("@/assets/images/arrow.png")}
+                      <Text
                         style={{
-                          tintColor: "#F94695",
-                          height: 14,
-                          width: 14,
-                          marginRight: 4,
+                          ...styles.text,
+                          color: "#FFFFFFE5",
+                          flexShrink: 1,
+                        }}
+                      >
+                        {note.content}
+                      </Text>
+                      <View style={{ flex: 1 }} />
+                      <Ionicons
+                        name="chevron-forward"
+                        color="#F94695"
+                        size={22}
+                        style={{
+                          marginLeft: 15,
                         }}
                       />
                     </View>
@@ -136,6 +147,15 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
+  text: {
+    fontFamily: "PingFang SC",
+    fontWeight: "400",
+    fontStyle: "normal",
+    fontSize: 16,
+    lineHeight: 16 * 1.2,
+    letterSpacing: 16 * -0.02,
+    color: "#fff",
+  },
   categoryHeader: {
     flexDirection: "row",
     gap: 8,
@@ -149,11 +169,14 @@ const styles = StyleSheet.create({
   },
   noteCard: {
     flexDirection: "row",
-    justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: "rgba(255,255,255,0.06)",
-    padding: 12,
-    borderRadius: 8,
     marginBottom: 8,
+    borderColor: "#FFFFFF1F",
+    borderStyle: "solid",
+    borderWidth: 1,
+    backdropFilter: "blur(42px)",
+    backgroundColor: "#FFFFFF0D",
+    borderRadius: 16,
+    padding: 16,
   },
 });
