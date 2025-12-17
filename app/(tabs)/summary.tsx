@@ -1,3 +1,4 @@
+import { Planet } from "@/components/Planet";
 import { LinearGradient } from "expo-linear-gradient";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 
@@ -28,12 +29,8 @@ export default function SummaryScreen() {
         gap: 20,
       }}
     >
-      <LinearGradient
-        colors={["#1D0837", "#1C0B37"]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={styles.titleContainer}
-      >
+      <View style={styles.titleContainer}>
+        <Planet />
         <Text style={{ color: "#fff", fontSize: 24, fontWeight: "bold" }}>
           Summary
         </Text>
@@ -44,7 +41,7 @@ export default function SummaryScreen() {
             width: 100,
           }}
         />
-      </LinearGradient>
+      </View>
       <View style={{ marginTop: 180 }}>
         {CATEGORIES.map((category) => (
           <View key={category.name} style={{ marginBottom: 20 }}>
