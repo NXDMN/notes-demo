@@ -25,13 +25,22 @@ export default function SummaryScreen() {
       end={{ x: 1, y: 1 }}
       style={{
         flex: 1,
-        padding: 20,
         gap: 20,
       }}
     >
       <View style={styles.titleContainer}>
         <Planet />
-        <Text style={{ color: "#fff", fontSize: 24, fontWeight: "bold" }}>
+        <Text
+          style={{
+            color: "#fff",
+            fontFamily: "PingFang SC",
+            fontWeight: "600",
+            fontStyle: "normal",
+            fontSize: 24,
+            lineHeight: 24 * 1.5,
+            letterSpacing: 0,
+          }}
+        >
           Summary
         </Text>
         <Image
@@ -42,13 +51,24 @@ export default function SummaryScreen() {
           }}
         />
       </View>
-      <View style={{ marginTop: 180 }}>
+      <View
+        style={{
+          marginTop: 180,
+          backgroundColor: "#FFFFFF0D",
+          padding: 20,
+          flex: 1,
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,
+          backdropFilter: "blur(42px)",
+        }}
+      >
         {CATEGORIES.map((category) => (
-          <View key={category.name} style={{ marginBottom: 20 }}>
+          <View key={category.name} style={{ marginBottom: 30 }}>
             <View
               style={{
                 flexDirection: "row",
                 justifyContent: "space-between",
+                alignItems: "center",
                 marginBottom: 10,
               }}
             >
@@ -67,30 +87,62 @@ export default function SummaryScreen() {
                     borderRadius: 24,
                   }}
                 />
-                <Text style={{ color: "#fff" }}>{category.name}</Text>
+                <Text
+                  style={{
+                    color: "#fff",
+                    fontFamily: "PingFang SC",
+                    fontWeight: "400",
+                    fontStyle: "normal",
+                    fontSize: 16,
+                    lineHeight: 16 * 1.2,
+                    letterSpacing: 16 * -0.02,
+                  }}
+                >
+                  {category.name}
+                </Text>
               </View>
-              <Pressable
+              <LinearGradient
+                colors={["#F94695", "#F13A76"]}
+                locations={[0, 1]}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 0, y: 1 }}
                 style={{
-                  backgroundColor: "#F94695",
                   height: 34,
                   width: 71,
                   borderRadius: 24,
                   justifyContent: "center",
                   alignItems: "center",
-                  marginBottom: 20,
                 }}
               >
-                <Text style={{ color: "#fff" }}>Detail</Text>
-              </Pressable>
+                <Pressable onPress={() => {}}>
+                  <Text
+                    style={{
+                      color: "#fff",
+                      fontFamily: "PingFang SC",
+                      fontWeight: "600",
+                      fontStyle: "normal",
+                      fontSize: 14,
+                      lineHeight: 14 * 1.3,
+                      letterSpacing: 0,
+                    }}
+                  >
+                    Detail
+                  </Text>
+                </Pressable>
+              </LinearGradient>
             </View>
-            <View
-              style={{
-                backgroundColor: "rgba(255,255,255,0.06)",
-                borderRadius: 8,
-                padding: 10,
-              }}
-            >
-              <Text style={{ color: "#fff" }}>
+            <View style={styles.glassContainer}>
+              <Text
+                style={{
+                  color: "#FFFFFFB2",
+                  fontFamily: "PingFang SC",
+                  fontWeight: "400",
+                  fontStyle: "normal",
+                  fontSize: 14,
+                  lineHeight: 14 * 1.3,
+                  letterSpacing: 0,
+                }}
+              >
                 This topic has a total of {category.count} records.
               </Text>
             </View>
@@ -102,12 +154,6 @@ export default function SummaryScreen() {
 }
 
 const styles = StyleSheet.create({
-  headerImage: {
-    color: "#808080",
-    bottom: -90,
-    left: -35,
-    position: "absolute",
-  },
   titleContainer: {
     position: "absolute",
     top: 0,
@@ -120,5 +166,14 @@ const styles = StyleSheet.create({
     height: 180,
     alignItems: "center",
     justifyContent: "space-between",
+  },
+  glassContainer: {
+    borderColor: "#FFFFFF1F",
+    borderStyle: "solid",
+    borderWidth: 1,
+    backdropFilter: "blur(42px)",
+    backgroundColor: "#FFFFFF0D",
+    borderRadius: 16,
+    padding: 16,
   },
 });
