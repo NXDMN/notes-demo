@@ -21,6 +21,7 @@ export default function RootLayout() {
       >
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="create" />
+        <Stack.Screen name="settings" />
       </Stack>
       <StatusBar style="light" />
     </>

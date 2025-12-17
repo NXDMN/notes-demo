@@ -7,9 +7,10 @@ import { TouchableOpacity, View } from "react-native";
 type Props = {
   title: string;
   hasBackButton?: boolean;
+  action?: React.ReactNode;
 };
 
-export function PageHeader({ title, hasBackButton = false }: Props) {
+export function PageHeader({ title, hasBackButton = false, action }: Props) {
   const router = useRouter();
 
   return (
@@ -50,6 +51,8 @@ export function PageHeader({ title, hasBackButton = false }: Props) {
             </TouchableOpacity>
           ) : null
         }
+        headerRight={() => action}
+        headerRightContainerStyle={{ paddingRight: 15 }}
       />
     </View>
   );

@@ -2,8 +2,16 @@ import { PageHeader } from "@/components/PageHeader";
 import { Note } from "@/models/Note";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
+import { useRouter } from "expo-router";
 import { useState } from "react";
-import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  Image,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 
 const CATEGORIES = [
   { name: "Work and Study", icon: require("@/assets/images/work.png") },
@@ -59,9 +67,21 @@ export default function HomeScreen() {
     return getNotesByCategory(category).slice(0, 3);
   };
 
+  const router = useRouter();
+
   return (
     <>
-      <PageHeader title="Home" />
+      <PageHeader
+        title="Home"
+        action={
+          <Pressable onPress={() => router.push("/settings")}>
+            <Image
+              source={require("@/assets/images/settings-icon.png")}
+              style={{ height: 24, width: 24 }}
+            />
+          </Pressable>
+        }
+      />
       <LinearGradient
         colors={["#1B284F", "#351159", "#421C45", "#3B184E"]}
         locations={[0.1445, 0.4917, 0.7482, 1.0]}
