@@ -1,7 +1,14 @@
+import { FooterButton } from "@/components/FooterButton";
 import { PageHeader } from "@/components/PageHeader";
 import { LinearGradient } from "expo-linear-gradient";
+import { useRouter } from "expo-router";
 
 export default function SettingsScreen() {
+  const router = useRouter();
+  const deleteAllNotes = async () => {
+    router.back();
+  };
+
   return (
     <>
       <PageHeader title="Settings" hasBackButton={true} />
@@ -15,7 +22,9 @@ export default function SettingsScreen() {
           padding: 20,
           gap: 20,
         }}
-      ></LinearGradient>
+      >
+        <FooterButton buttonText="Delete All Notes" onPress={deleteAllNotes} />
+      </LinearGradient>
     </>
   );
 }
