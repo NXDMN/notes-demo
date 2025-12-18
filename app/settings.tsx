@@ -1,5 +1,6 @@
 import { FooterButton } from "@/components/FooterButton";
 import { PageHeader } from "@/components/PageHeader";
+import { useNotes } from "@/contexts/NotesContext";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
@@ -22,6 +23,9 @@ export default function SettingsScreen() {
     },
     { name: "About Us", icon: require("@/assets/images/about-us-icon.png") },
   ];
+
+  const { deleteAll } = useNotes();
+
   const router = useRouter();
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -36,6 +40,7 @@ export default function SettingsScreen() {
   }, [modalVisible]);
 
   const deleteAllNotes = async () => {
+    deleteAll();
     setModalVisible(true);
   };
 

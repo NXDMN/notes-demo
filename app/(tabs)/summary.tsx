@@ -1,4 +1,6 @@
 import { Planet } from "@/components/Planet";
+import { useNotes } from "@/contexts/NotesContext";
+import { NoteCategory } from "@/types/Note";
 import { LinearGradient } from "expo-linear-gradient";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 
@@ -17,6 +19,25 @@ const CATEGORIES = [
 ];
 
 export default function SummaryScreen() {
+  const { notes } = useNotes();
+
+  const getIcon = (category: NoteCategory) => {
+    switch (category) {
+      case NoteCategory.Work:
+        return require("@/assets/images/emoji1.png");
+      case NoteCategory.Life:
+        return require("@/assets/images/emoji2.png");
+      case NoteCategory.Health:
+        return require("@/assets/images/emoji3.png");
+      default:
+        return require("@/assets/images/emoji1.png");
+    }
+  };
+
+  const notesCountByCategory = (category: NoteCategory) => {
+    return notes.filter((n) => n.category === category).length;
+  };
+
   return (
     <LinearGradient
       colors={["#1B284F", "#351159", "#421C45", "#3B184E"]}
@@ -62,8 +83,8 @@ export default function SummaryScreen() {
           backdropFilter: "blur(42px)",
         }}
       >
-        {CATEGORIES.map((category) => (
-          <View key={category.name} style={{ marginBottom: 30 }}>
+        {Object.entries(NoteCategory).map(([key, val]) => (
+          <View key={key} style={{ marginBottom: 30 }}>
             <View
               style={{
                 flexDirection: "row",
@@ -80,7 +101,7 @@ export default function SummaryScreen() {
                 }}
               >
                 <Image
-                  source={category.icon}
+                  source={getIcon(val)}
                   style={{
                     height: 48,
                     width: 48,
@@ -98,7 +119,7 @@ export default function SummaryScreen() {
                     letterSpacing: 16 * -0.02,
                   }}
                 >
-                  {category.name}
+                  {val}
                 </Text>
               </View>
               <LinearGradient
@@ -143,7 +164,7 @@ export default function SummaryScreen() {
                   letterSpacing: 0,
                 }}
               >
-                This topic has a total of {category.count} records.
+                This topic has a total of {notesCountByCategory(val)} records.
               </Text>
             </View>
           </View>

@@ -1,10 +1,11 @@
 import { PageHeader } from "@/components/PageHeader";
-import { Note } from "@/models/Note";
+import { useNotes } from "@/contexts/NotesContext";
+import { Note, NoteCategory } from "@/types/Note";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
-import { useState } from "react";
 import {
+  ActivityIndicator,
   Image,
   Pressable,
   ScrollView,
@@ -13,61 +14,41 @@ import {
   View,
 } from "react-native";
 
-const CATEGORIES = [
-  { name: "Work and Study", icon: require("@/assets/images/work.png") },
-  { name: "Life", icon: require("@/assets/images/life.png") },
-  {
-    name: "Health and Well-being",
-    icon: require("@/assets/images/health.png"),
-  },
-];
-
 export default function HomeScreen() {
-  const [notes, setNotes] = useState<Note[]>([
-    {
-      id: 1,
-      category: "Work and Study",
-      content: "Overview of basic computer networking knowledge",
-      createdAt: Date.now() - 3600000,
-    },
-    {
-      id: 2,
-      category: "Work and Study",
-      content:
-        "How to calculate float multiplication and division in JavaScript?",
-      createdAt: Date.now() - 7200000,
-    },
-    {
-      id: 3,
-      category: "Life",
-      content: "Pan-fried chicken breast with vegetable salad",
-      createdAt: Date.now() - 1800000,
-    },
-    {
-      id: 4,
-      category: "Life",
-      content: "Call mom this weekend",
-      createdAt: Date.now() - 900000,
-    },
-    {
-      id: 5,
-      category: "Health and Well-being",
-      content: "Morning yoga at 7am",
-      createdAt: Date.now() - 5400000,
-    },
-  ]);
+  const { notes, loaded } = useNotes();
 
-  const getNotesByCategory = (category: string) => {
-    return notes
-      .filter((note) => note.category === category)
-      .sort((a, b) => b.createdAt - a.createdAt);
-  };
+  const groupNotesByCategory: Record<NoteCategory, Note[]> = notes.reduce(
+    (acc, note) => {
+      if (!acc[note.category]) {
+        acc[note.category] = [];
+      }
+      acc[note.category].push(note);
+      return acc;
+    },
+    {} as Record<NoteCategory, Note[]>
+  );
 
-  const getLatestNotes = (category: string) => {
-    return getNotesByCategory(category).slice(0, 3);
+  const getLatestNotes = (category: NoteCategory) => {
+    const notesInCategory = groupNotesByCategory[category] || [];
+    return notesInCategory
+      .sort((a, b) => b.createdAt - a.createdAt)
+      .slice(0, 3);
   };
 
   const router = useRouter();
+
+  const getIcon = (category: NoteCategory) => {
+    switch (category) {
+      case NoteCategory.Work:
+        return require("@/assets/images/work.png");
+      case NoteCategory.Life:
+        return require("@/assets/images/life.png");
+      case NoteCategory.Health:
+        return require("@/assets/images/health.png");
+      default:
+        return require("@/assets/images/work.png");
+    }
+  };
 
   return (
     <>
@@ -114,52 +95,56 @@ export default function HomeScreen() {
 
           <View style={{ height: 30 }} />
 
-          {CATEGORIES.map((category) => {
-            const categoryNotes = getLatestNotes(category.name);
-            return (
-              <View key={category.name}>
-                <View style={styles.categoryHeader}>
-                  <Image
-                    source={category.icon}
-                    style={{
-                      tintColor: "#C724E1",
-                      height: 20,
-                      width: 20,
-                    }}
-                  />
-                  <Text style={styles.text}>{category.name}</Text>
-                </View>
+          {loaded ? (
+            Object.entries(NoteCategory).map(([key, val]) => {
+              const categoryNotes = getLatestNotes(val);
+              return (
+                <View key={key}>
+                  <View style={styles.categoryHeader}>
+                    <Image
+                      source={getIcon(val)}
+                      style={{
+                        tintColor: "#C724E1",
+                        height: 20,
+                        width: 20,
+                      }}
+                    />
+                    <Text style={styles.text}>{val}</Text>
+                  </View>
 
-                {categoryNotes.length === 0 ? (
-                  <></>
-                ) : (
-                  categoryNotes.map((note) => (
-                    <View key={note.id} style={styles.noteCard}>
-                      <Text
-                        style={{
-                          ...styles.text,
-                          color: "#FFFFFFE5",
-                          flexShrink: 1,
-                        }}
-                      >
-                        {note.content}
-                      </Text>
-                      <View style={{ flex: 1 }} />
-                      <Ionicons
-                        name="chevron-forward"
-                        color="#F94695"
-                        size={22}
-                        style={{
-                          marginLeft: 15,
-                        }}
-                      />
-                    </View>
-                  ))
-                )}
-                <View style={{ height: 20 }} />
-              </View>
-            );
-          })}
+                  {categoryNotes.length === 0 ? (
+                    <></>
+                  ) : (
+                    categoryNotes.map((note) => (
+                      <View key={note.id} style={styles.noteCard}>
+                        <Text
+                          style={{
+                            ...styles.text,
+                            color: "#FFFFFFE5",
+                            flexShrink: 1,
+                          }}
+                        >
+                          {note.content}
+                        </Text>
+                        <View style={{ flex: 1 }} />
+                        <Ionicons
+                          name="chevron-forward"
+                          color="#F94695"
+                          size={22}
+                          style={{
+                            marginLeft: 15,
+                          }}
+                        />
+                      </View>
+                    ))
+                  )}
+                  <View style={{ height: 20 }} />
+                </View>
+              );
+            })
+          ) : (
+            <ActivityIndicator />
+          )}
         </ScrollView>
       </LinearGradient>
     </>

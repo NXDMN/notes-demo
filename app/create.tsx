@@ -1,5 +1,8 @@
 import { FooterButton } from "@/components/FooterButton";
 import { PageHeader } from "@/components/PageHeader";
+import { useNotes } from "@/contexts/NotesContext";
+import { NoteCategory } from "@/types/Note";
+import * as Crypto from "expo-crypto";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
@@ -7,21 +10,30 @@ import { StyleSheet, TextInput } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 
 export default function CreateScreen() {
-  const [selected, setSelected] = useState();
-  const CATEGORIES = ["Work and Study", "Life", "Health and Well-being"];
   const [text, setText] = useState("");
+
+  const { addNote } = useNotes();
+
   const router = useRouter();
   const saveNote = async () => {
+    addNote({
+      id: Crypto.randomUUID(),
+      category: category as NoteCategory,
+      content: text,
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
+    });
     router.back();
   };
 
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState("");
-  const [items, setItems] = useState([
-    { label: "Work and Study", value: "Work and Study" },
-    { label: "Life", value: "Life" },
-    { label: "Health and Well-being", value: "Health and Well-being " },
-  ]);
+  const [category, setCategory] = useState<NoteCategory | null>(null);
+  const [items, setItems] = useState(
+    Object.entries(NoteCategory).map(([key, val]) => ({
+      label: val,
+      value: val,
+    }))
+  );
 
   return (
     <>
@@ -39,10 +51,10 @@ export default function CreateScreen() {
       >
         <DropDownPicker
           open={open}
-          value={value}
+          value={category}
           items={items}
           setOpen={setOpen}
-          setValue={setValue}
+          setValue={setCategory}
           setItems={setItems}
           mode="SIMPLE"
           theme="DARK"
