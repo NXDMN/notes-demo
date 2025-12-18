@@ -27,6 +27,7 @@ export default function SettingsScreen() {
   const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
+    if (!modalVisible) return;
     const timer = setTimeout(() => {
       setModalVisible(false);
       router.back();
