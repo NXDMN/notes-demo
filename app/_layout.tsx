@@ -1,3 +1,4 @@
+import { NotesProvider } from "@/contexts/NotesContext";
 import { Stack, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
@@ -10,7 +11,7 @@ export default function RootLayout() {
   const router = useRouter();
 
   return (
-    <>
+    <NotesProvider>
       <Stack
         screenOptions={{
           headerShown: false,
@@ -24,6 +25,6 @@ export default function RootLayout() {
         <Stack.Screen name="settings" />
       </Stack>
       <StatusBar style="light" />
-    </>
+    </NotesProvider>
   );
 }
