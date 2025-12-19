@@ -4,6 +4,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 
 type NotesContextType = {
   notes: Note[];
+  getNoteById: (id: string) => Note | undefined;
   addNote: (note: Note) => void;
   updateNote: (id: string, data: Partial<Note>) => void;
   deleteNote: (id: string) => void;
@@ -31,6 +32,8 @@ export function NotesProvider({ children }: { children: React.ReactNode }) {
     AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(notes));
   }, [notes, loaded]);
 
+  const getNoteById = (id: string) => notes.find((n) => n.id === id);
+
   const addNote = (note: Note) => setNotes((prev) => [note, ...prev]);
 
   const updateNote = (id: string, data: Partial<Note>) =>
@@ -47,7 +50,15 @@ export function NotesProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <NotesContext
-      value={{ notes, addNote, updateNote, deleteNote, deleteAll, loaded }}
+      value={{
+        notes,
+        getNoteById,
+        addNote,
+        updateNote,
+        deleteNote,
+        deleteAll,
+        loaded,
+      }}
     >
       {children}
     </NotesContext>

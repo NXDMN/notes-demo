@@ -59,7 +59,6 @@ export default function TabLayout() {
         <Tabs.Screen
           name="dummy"
           options={{
-            title: "Create",
             tabBarButton: (props) => {
               const { ref, ...rest } = props as any;
               return (
@@ -67,7 +66,7 @@ export default function TabLayout() {
                   {...rest}
                   onPress={(event) => {
                     event.preventDefault();
-                    router.push("/create");
+                    router.push("/detail/create");
                   }}
                   style={{
                     flex: 1,

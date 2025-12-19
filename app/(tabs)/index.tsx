@@ -50,6 +50,9 @@ export default function HomeScreen() {
     }
   };
 
+  const goDetail = (id: string) =>
+    router.push({ pathname: "/detail/[id]", params: { id: id } });
+
   return (
     <>
       <PageHeader
@@ -116,7 +119,11 @@ export default function HomeScreen() {
                     <></>
                   ) : (
                     categoryNotes.map((note) => (
-                      <View key={note.id} style={styles.noteCard}>
+                      <Pressable
+                        key={note.id}
+                        style={styles.noteCard}
+                        onPress={() => goDetail(note.id)}
+                      >
                         <Text
                           style={{
                             ...styles.text,
@@ -135,7 +142,7 @@ export default function HomeScreen() {
                             marginLeft: 15,
                           }}
                         />
-                      </View>
+                      </Pressable>
                     ))
                   )}
                   <View style={{ height: 20 }} />

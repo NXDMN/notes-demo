@@ -4,30 +4,47 @@ import { useNotes } from "@/contexts/NotesContext";
 import { NoteCategory } from "@/types/Note";
 import * as Crypto from "expo-crypto";
 import { LinearGradient } from "expo-linear-gradient";
-import { useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useState } from "react";
 import { StyleSheet, TextInput } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 
 export default function CreateScreen() {
-  const [text, setText] = useState("");
+  const { id } = useLocalSearchParams<{ id?: string }>();
 
-  const { addNote } = useNotes();
+  const { getNoteById, addNote, updateNote } = useNotes();
+
+  const editMode = id && typeof id === "string" && id !== "create";
+
+  const note = editMode ? getNoteById(id) : null;
+
+  const [text, setText] = useState(note?.content ?? "");
 
   const router = useRouter();
   const saveNote = async () => {
-    addNote({
-      id: Crypto.randomUUID(),
-      category: category as NoteCategory,
-      content: text,
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
-    });
+    if (editMode) {
+      updateNote(id, {
+        category: category as NoteCategory,
+        content: text,
+        updatedAt: Date.now(),
+      });
+    } else {
+      addNote({
+        id: Crypto.randomUUID(),
+        category: category as NoteCategory,
+        content: text,
+        createdAt: Date.now(),
+        updatedAt: Date.now(),
+      });
+    }
+
     router.back();
   };
 
   const [open, setOpen] = useState(false);
-  const [category, setCategory] = useState<NoteCategory | null>(null);
+  const [category, setCategory] = useState<NoteCategory | null>(
+    note?.category ?? null
+  );
   const [items, setItems] = useState(
     Object.entries(NoteCategory).map(([key, val]) => ({
       label: val,
@@ -37,7 +54,10 @@ export default function CreateScreen() {
 
   return (
     <>
-      <PageHeader title="New Note" hasBackButton={true} />
+      <PageHeader
+        title={editMode ? "Edit Note" : "New Note"}
+        hasBackButton={true}
+      />
       <LinearGradient
         colors={["#1B284F", "#351159", "#421C45", "#3B184E"]}
         locations={[0.1445, 0.4917, 0.7482, 1.0]}
